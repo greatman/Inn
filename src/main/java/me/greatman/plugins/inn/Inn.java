@@ -3,6 +3,7 @@ package me.greatman.plugins.inn;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import me.greatman.plugins.inn.commands.CommandManager;
 import me.greatman.plugins.inn.commands.InnCmd;
@@ -39,6 +40,8 @@ public class Inn extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_MOVE,playerListener,Priority.Monitor,this);
 		IConfig IConfig = new IConfig(this);
 		IConfig.configCheck();
+		ILogger.initialize(Logger.getLogger("Minecraft"));
+		IPermissions.initialize(this);
 		InnCmd InnCmd = new InnCmd(this);
 		addCommand("inn",InnCmd);
 	    ILogger.info("initialized!");
