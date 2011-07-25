@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import me.greatman.plugins.inn.commands.CommandManager;
 import me.greatman.plugins.inn.commands.InnCmd;
+import me.greatman.plugins.inn.extras.CommandManager;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

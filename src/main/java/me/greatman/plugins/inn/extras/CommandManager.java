@@ -1,4 +1,4 @@
-package me.greatman.plugins.inn.commands;
+package me.greatman.plugins.inn.extras;
 
 import java.util.Hashtable;
 import java.util.Map;
