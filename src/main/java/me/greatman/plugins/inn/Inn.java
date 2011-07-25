@@ -38,9 +38,9 @@ public class Inn extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_BED_ENTER, playerListener, Priority.Lowest, this);
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Priority.Monitor,this);
 		pm.registerEvent(Event.Type.PLAYER_MOVE,playerListener,Priority.Monitor,this);
+		ILogger.initialize(Logger.getLogger("Minecraft"));
 		IConfig IConfig = new IConfig(this);
 		IConfig.configCheck();
-		ILogger.initialize(Logger.getLogger("Minecraft"));
 		IPermissions.initialize(this);
 		InnCmd InnCmd = new InnCmd(this);
 		addCommand("inn",InnCmd);
