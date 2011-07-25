@@ -1,0 +1,7 @@
+author: greatman
+database: true
+generator: http://dinnerbone.com/minecraft/tools/pluginator/
+main: me.greatman.plugins.inn.Inn
+name: Inn
+startup: postworld
+version: '0.1'
