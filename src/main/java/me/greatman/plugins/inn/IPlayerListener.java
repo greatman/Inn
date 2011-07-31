@@ -15,9 +15,6 @@ public class IPlayerListener extends PlayerListener {
     public IPlayerListener(Inn instance) {
         plugin = instance;
     }
-    public void onPlayerEnterBed(PlayerBedEnterEvent event){
-    	
-    }
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.isCancelled())
@@ -30,7 +27,7 @@ public class IPlayerListener extends PlayerListener {
         }
 
         // If our user is select & is not holding an item, selection time
-        if (plugin.getPlayerData().get(playerName).isSelecting() && player.getItemInHand().getType() == Material.AIR) {
+        if (plugin.getPlayerData().get(playerName).isSelecting() && player.getItemInHand().getType() == Material.AIR && event.getClickedBlock().getType() == Material.WOODEN_DOOR) {
             int x, y, z;
             Location loc = event.getClickedBlock().getLocation();
             x = loc.getBlockX();
@@ -43,32 +40,16 @@ public class IPlayerListener extends PlayerListener {
                 int[] xyz = { x, y, z };
                 pData.setPositionA(xyz);
                 if(pData.checkSize()) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "First Position " + ChatColor.LIGHT_PURPLE + x + " " + y + " " + z + ChatColor.DARK_AQUA + " size " + ChatColor.LIGHT_PURPLE + plugin.getPlayerData().get(playerName).getSizeString());
-                } else {
-                    player.sendMessage(ChatColor.DARK_AQUA + "First Position " + ChatColor.LIGHT_PURPLE + x + " " + y + " " + z);
-                }
+                    player.sendMessage(ChatColor.DARK_AQUA + "Door selected");
                 
-                if(pData.getPositionA() != null && pData.getPositionB() == null) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Now, right click to select the far upper corner for the inn.");
-                } else if(pData.getPositionA() != null && pData.getPositionB() != null) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Inn Name]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
+	                if(pData.getPositionA() != null && pData.getPositionB() == null) {
+	                    player.sendMessage(ChatColor.DARK_AQUA + "Now, right click to select the far upper corner for the inn.");
+	                } else if(pData.getPositionA() != null) {
+	                    player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Price]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
+	                }
                 }
-            } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                int[] xyz = { x, y, z };
-                pData.setPositionB(xyz);
-                if(pData.checkSize()) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Second Position " + ChatColor.LIGHT_PURPLE + x + " " + y + " " + z + ChatColor.DARK_AQUA + " size " + ChatColor.LIGHT_PURPLE + plugin.getPlayerData().get(playerName).getSizeString());
-                } else {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Second Position " + ChatColor.LIGHT_PURPLE + x + " " + y + " " + z);
-                }
-                
-                if(pData.getPositionB() != null && pData.getPositionA() == null) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Now, left click to select the bottom corner for a shop.");
-                } else if(pData.getPositionA() != null && pData.getPositionB() != null) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Inn Name]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
-                }
+        
             }
         }
-
     }
 }

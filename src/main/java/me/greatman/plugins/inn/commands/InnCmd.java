@@ -1,8 +1,11 @@
 package me.greatman.plugins.inn.commands;
 
+import me.greatman.plugins.inn.IConfig;
 import me.greatman.plugins.inn.IPermissions;
+import me.greatman.plugins.inn.ITools;
 import me.greatman.plugins.inn.Inn;
 import me.greatman.plugins.inn.PlayerData;
+import me.greatman.plugins.inn.extras.CommandManager;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -12,8 +15,11 @@ import org.bukkit.entity.Player;
 
 public class InnCmd implements CommandExecutor {
 	private final Inn plugin;
+	private final IConfig IConfig;
     public InnCmd(Inn instance) {
         plugin = instance;
+        IConfig = new IConfig(plugin);
+        
     }
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     	boolean handled = false;
@@ -22,11 +28,12 @@ public class InnCmd implements CommandExecutor {
     			handled = true;
     		}
     		if (is(args[0], "select")){
+    			handled = true;
     			if (!(sender instanceof Player)){
     				sendMessage(sender,colorizeText("Only players can use this command.",ChatColor.RED));
     				return handled;
     			}
-    			if (isPlayer(sender) && IPermissions.permission(plugin.getPlayer(sender), "inn.select", plugin.getPlayer(sender).isOp())){
+    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.create", plugin.getPlayer(sender).isOp())){
     				Player player = (Player) sender;
     				String playerName = player.getName();
     				if (!plugin.getPlayerData().containsKey(playerName)) {
@@ -36,15 +43,42 @@ public class InnCmd implements CommandExecutor {
 
     	            if (plugin.getPlayerData().get(playerName).isSelecting()) {
     	                sender.sendMessage(ChatColor.WHITE + "Inn selection enabled." + ChatColor.DARK_AQUA + " Use " + ChatColor.WHITE + "bare hands " + ChatColor.DARK_AQUA + "to select!");
-    	                sender.sendMessage(ChatColor.DARK_AQUA + "Left click to select the bottom corner for a shop");
-    	                sender.sendMessage(ChatColor.DARK_AQUA + "Right click to select the far upper corner for the shop");
+    	                sender.sendMessage(ChatColor.DARK_AQUA + "Left click the room door");
     	            } else {
     	                sender.sendMessage(ChatColor.DARK_AQUA + "Selection disabled");
     	                plugin.getPlayerData().put(playerName, new PlayerData(plugin, playerName));
     	            }
     			}else
     				sendMessage(sender,colorizeText("Permission denied.",ChatColor.RED));
-    		}
+    		}else if(is(args[0], "create")){
+    			handled = true;
+    			if (!(sender instanceof Player)){
+    				sendMessage(sender,colorizeText("Only players can use this command.",ChatColor.RED));
+    				return handled;
+    			}
+    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.create", plugin.getPlayer(sender).isOp())){
+    				if (args.length == 1){
+    					sendMessage(sender,colorizeText("Syntax: /inn create [Price]",ChatColor.RED));
+    					return true;
+    				}
+    				if (ITools.isInt(args[1])){
+    					Player player = (Player) sender;
+        				String playerName = player.getName();
+    					int[] xyz = plugin.getPlayerData().get(playerName).getPositionA();
+    					int i = 0;
+    					for (i=0;i < 9999999;i++){
+    						if (!IConfig.readBoolean("door."+ i + ".active")){
+    							break;
+    						}
+    					}
+    					IConfig.write("door." + i + ".active", true);
+    					IConfig.write("door." + i + ".x",xyz['x']);
+    					IConfig.write("door." + i + ".x",xyz['y']);
+    					IConfig.write("door." + i + ".x",xyz['z']);
+    				}else
+    					sendMessage(sender,colorizeText("Expected integer. Received string.",ChatColor.RED));
+    			}
+    		}	
     	}
     	return handled;
     }

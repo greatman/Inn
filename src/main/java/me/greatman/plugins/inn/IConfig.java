@@ -32,29 +32,29 @@ public class IConfig {
             loadkeys();
         }
     }
-    private void write(String root, Object x){
+    public void write(String root, Object x){
         Configuration config = load();
         config.setProperty(root, x);
         config.save();
     }
-    private Boolean readBoolean(String root){
+    public Boolean readBoolean(String root){
         Configuration config = load();
         return config.getBoolean(root, false);
     }
 
-    private Double readDouble(String root){
+    public Double readDouble(String root){
         Configuration config = load();
         return config.getDouble(root, 0);
     }
-    private List<String> readStringList(String root){
+    public List<String> readStringList(String root){
         Configuration config = load();
         return config.getKeys(root);
     }
-    private String readString(String root){
+    public String readString(String root){
         Configuration config = load();
         return config.getString(root);
     }
-    private int readInteger(String root,int def){
+    public int readInteger(String root,int def){
     	Configuration config = load();
     	return config.getInt(root, def);
     }
