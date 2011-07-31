@@ -33,7 +33,7 @@ public class IPlayerListener extends PlayerListener {
             x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-            
+            ILogger.info(Integer.toString(event.getClickedBlock().getTypeId()));
             PlayerData pData = plugin.getPlayerData().get(playerName);
             
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
