@@ -33,7 +33,6 @@ public class IPlayerListener extends PlayerListener {
             x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-            ILogger.info(Integer.toString(event.getClickedBlock().getTypeId()));
             PlayerData pData = plugin.getPlayerData().get(playerName);
             
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -42,9 +41,7 @@ public class IPlayerListener extends PlayerListener {
                 if(pData.checkSize()) {
                     player.sendMessage(ChatColor.DARK_AQUA + "Door selected");
                 
-	                if(pData.getPositionA() != null && pData.getPositionB() == null) {
-	                    player.sendMessage(ChatColor.DARK_AQUA + "Now, right click to select the far upper corner for the inn.");
-	                } else if(pData.getPositionA() != null) {
+	                if(pData.getPositionA() != null) {
 	                    player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Price]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
 	                }
                 }
