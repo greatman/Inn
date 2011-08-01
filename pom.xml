@@ -84,7 +84,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>me.asktheking</groupId>
+			<groupId>me.ashtheking</groupId>
 			<artifactId>currency</artifactId>
 			<version>0.09</version>
 			<type>jar</type>

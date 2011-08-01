@@ -63,12 +63,10 @@ public class Methods {
      * @see #Methods(java.lang.String)
      */
     private void _init() {
-        this.addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo6());
         this.addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo5());
         this.addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo4());
         this.addMethod("BOSEconomy", new com.nijikokun.register.payment.methods.BOSE6());
         this.addMethod("BOSEconomy", new com.nijikokun.register.payment.methods.BOSE7());
-        this.addMethod("Essentials", new com.nijikokun.register.payment.methods.EE17());
         this.addMethod("MultiCurrency", new com.nijikokun.register.payment.methods.MCUR());
     }
 
