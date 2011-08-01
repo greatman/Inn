@@ -11,9 +11,10 @@ import org.bukkit.event.player.PlayerListener;
 
 public class IPlayerListener extends PlayerListener {
 	private final Inn plugin;
-
+	private IConfig IConfig;
     public IPlayerListener(Inn instance) {
         plugin = instance;
+         IConfig = new IConfig(plugin);
     }
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -36,6 +37,12 @@ public class IPlayerListener extends PlayerListener {
             PlayerData pData = plugin.getPlayerData().get(playerName);
             
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            	for (int i=0;i < 9999999;i++){
+            		if (IConfig.readInteger("door."+ i + "x", 0) == x && IConfig.readInteger("door."+ i + "y", 0) == y && IConfig.readInteger("door."+ i + "z", 0) == z){
+            			player.sendMessage(ChatColor.RED + "This door is already registered!");
+            			return;
+            		}
+            	}
                 int[] xyz = { x, y, z };
                 pData.setPositionA(xyz);
                 player.sendMessage(ChatColor.DARK_AQUA + "Door selected");
