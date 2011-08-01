@@ -57,7 +57,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.nijikokun</groupId>
-			<artifactId>register</artifactId>
+			<artifactId>Register</artifactId>
 			<version>1.0</version>
 			<type>jar</type>
 			<scope>compile</scope>
