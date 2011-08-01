@@ -1,6 +1,7 @@
 package me.greatman.plugins.inn.commands;
 
 import me.greatman.plugins.inn.IConfig;
+import me.greatman.plugins.inn.ILogger;
 import me.greatman.plugins.inn.IPermissions;
 import me.greatman.plugins.inn.ITools;
 import me.greatman.plugins.inn.Inn;
@@ -13,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
+import com.nijikokun.register.payment.Methods;
 
 public class InnCmd implements CommandExecutor {
 	private final Inn plugin;
@@ -74,6 +76,7 @@ public class InnCmd implements CommandExecutor {
     					//We check if the player have enough money to create a inn door
     					MethodAccount playerAccount = plugin.Method.getAccount(playerName);
     					if (playerAccount.hasEnough(IConfig.cost)){
+    						ILogger.info(Double.toString(IConfig.cost));
     						playerAccount.subtract(IConfig.cost);
     						IConfig.write("door." + i + ".active", true);
         					IConfig.write("door." + i + ".x",xyz[0]);
