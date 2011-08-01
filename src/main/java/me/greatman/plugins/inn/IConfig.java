@@ -12,10 +12,8 @@ import org.bukkit.util.config.Configuration;
 public class IConfig {
     public static double cost;
     public IConfig(Inn instance) {
-        configCheck();
-        load();
     }
-    public String directory = "plugins" + File.separator + "Tickets";
+    public String directory = "plugins" + File.separator + "Inn";
     File file = new File(directory + File.separator + "config.yml");
     public void configCheck(){
         
