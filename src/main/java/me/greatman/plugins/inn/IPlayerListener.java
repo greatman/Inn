@@ -38,13 +38,12 @@ public class IPlayerListener extends PlayerListener {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 int[] xyz = { x, y, z };
                 pData.setPositionA(xyz);
-                if(pData.checkSize()) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "Door selected");
+                player.sendMessage(ChatColor.DARK_AQUA + "Door selected");
                 
-	                if(pData.getPositionA() != null) {
-	                    player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Price]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
-	                }
-                }
+	            if(pData.getPositionA() != null) {
+	                   player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Price]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
+	            }
+                
         
             }
         }

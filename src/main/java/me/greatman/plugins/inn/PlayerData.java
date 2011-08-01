@@ -49,18 +49,6 @@ public class PlayerData {
     public String getSizeString() {
         return size;
     }
-    public boolean checkSize() {
-        if (xyzA == null || xyzB == null) {
-            return false;
-        }
-
-        double width1 = Math.abs(xyzA[0] - xyzB[0]) + 1;
-        double height = Math.abs(xyzA[1] - xyzB[1]) + 1;
-        double width2 = Math.abs(xyzA[2] - xyzB[2]) + 1;
-
-        size = "" + width1 + "x" + height + "x" + width2;
-            return true;
-    }
     /*public boolean addPlayerToShop(Shop shop) {
         String playerWorld = plugin.getServer().getPlayer(playerName).getWorld().getName();
 
