@@ -72,9 +72,9 @@ public class InnCmd implements CommandExecutor {
     						}
     					}
     					IConfig.write("door." + i + ".active", true);
-    					IConfig.write("door." + i + ".x",xyz['x']);
-    					IConfig.write("door." + i + ".x",xyz['y']);
-    					IConfig.write("door." + i + ".x",xyz['z']);
+    					IConfig.write("door." + i + ".x",xyz[0]);
+    					IConfig.write("door." + i + ".x",xyz[1]);
+    					IConfig.write("door." + i + ".x",xyz[2]);
     					IConfig.write("door." + i + ".price",args[1]);
     				}else
     					sendMessage(sender,colorizeText("Expected integer. Received string.",ChatColor.RED));
