@@ -37,7 +37,9 @@ public class IPlayerListener extends PlayerListener {
             PlayerData pData = plugin.getPlayerData().get(playerName);
             
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            	for (int i=0;i < 9999999;i++){
+            	
+            	for (int i=0;i < 2000;i++){
+            		ILogger.info(Integer.toString(i));
             		if (IConfig.readInteger("door."+ i + "x", 0) == x && IConfig.readInteger("door."+ i + "y", 0) == y && IConfig.readInteger("door."+ i + "z", 0) == z){
             			player.sendMessage(ChatColor.RED + "This door is already registered!");
             			return;

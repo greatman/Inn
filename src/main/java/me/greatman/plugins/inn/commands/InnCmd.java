@@ -66,7 +66,7 @@ public class InnCmd implements CommandExecutor {
         				String playerName = player.getName();
     					int[] xyz = plugin.getPlayerData().get(playerName).getPositionA();
     					int i = 0;
-    					for (i=0;i < 9999999;i++){
+    					for (i=0;i < 2000;i++){
     						if (!IConfig.readBoolean("door."+ i + ".active")){
     							break;
     						}
