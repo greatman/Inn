@@ -18,6 +18,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.nijikokun.register.payment.Method;
+
 public class Inn extends JavaPlugin {
 	public static String name,version;
 	public Configuration config;
@@ -25,6 +27,8 @@ public class Inn extends JavaPlugin {
 	private Map<String, PlayerData> playerData;
 	private final CommandManager commandManager = new CommandManager(this);
 	private final IPlayerListener playerListener = new IPlayerListener(this);
+	private final IServerListener serverListener = new IServerListener(this);
+	public Method Method;
     public void onDisable() {
         // TODO: Place any custom disable code here.
         System.out.println(this + " is now disabled!");
@@ -38,6 +42,7 @@ public class Inn extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_BED_ENTER, playerListener, Priority.Lowest, this);
 		pm.registerEvent(Event.Type.PLAYER_INTERACT, playerListener, Priority.Monitor,this);
 		pm.registerEvent(Event.Type.PLAYER_MOVE,playerListener,Priority.Monitor,this);
+		pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverListener,Priority.Monitor,this);
 		ILogger.initialize(Logger.getLogger("Minecraft"));
 		IConfig IConfig = new IConfig(this);
 		IConfig.configCheck();

@@ -13,13 +13,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.nijikokun.register.payment.Method.MethodAccount;
+import com.nijikokun.register.payment.Methods;
+import com.nijikokun.register.payment.Method;
+
 public class InnCmd implements CommandExecutor {
 	private final Inn plugin;
 	private final IConfig IConfig;
     public InnCmd(Inn instance) {
         plugin = instance;
         IConfig = new IConfig(plugin);
-        
     }
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     	boolean handled = false;
@@ -71,11 +74,20 @@ public class InnCmd implements CommandExecutor {
     							break;
     						}
     					}
-    					IConfig.write("door." + i + ".active", true);
-    					IConfig.write("door." + i + ".x",xyz[0]);
-    					IConfig.write("door." + i + ".y",xyz[1]);
-    					IConfig.write("door." + i + ".z",xyz[2]);
-    					IConfig.write("door." + i + ".price",args[1]);
+    					//We check if the player have enough money to create a inn door
+    					MethodAccount playerAccount = plugin.Method.getAccount(playerName);
+    					if (playerAccount.hasEnough(IConfig.cost)){
+    						playerAccount.subtract(IConfig.cost);
+    						IConfig.write("door." + i + ".active", true);
+        					IConfig.write("door." + i + ".x",xyz[0]);
+        					IConfig.write("door." + i + ".y",xyz[1]);
+        					IConfig.write("door." + i + ".z",xyz[2]);
+        					IConfig.write("door." + i + ".price",args[1]);
+        					IConfig.write("door." + i + ".owner",playerName);
+        					sendMessage(sender,colorizeText("Inn room created!",ChatColor.GREEN));
+    					}else
+    						sendMessage(sender,colorizeText("You don't have enough money!",ChatColor.RED));
+    					
     				}else
     					sendMessage(sender,colorizeText("Expected integer. Received string.",ChatColor.RED));
     			}
