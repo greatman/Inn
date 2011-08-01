@@ -56,9 +56,37 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.nijikokun</groupId>
-			<artifactId>Register</artifactId>
-			<version>1.0</version>
+			<groupId>com</groupId>
+			<artifactId>iConomy</artifactId>
+			<version>5.0.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.nijiko.coelho</groupId>
+			<artifactId>iConomy</artifactId>
+			<version>4.6</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>cosine</groupId>
+			<artifactId>boseconomy</artifactId>
+			<version>6.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>cosine</groupId>
+			<artifactId>boseconomy</artifactId>
+			<version>7.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>me.asktheking</groupId>
+			<artifactId>currency</artifactId>
+			<version>0.09</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

@@ -5,7 +5,6 @@ import me.greatman.plugins.inn.IPermissions;
 import me.greatman.plugins.inn.ITools;
 import me.greatman.plugins.inn.Inn;
 import me.greatman.plugins.inn.PlayerData;
-import me.greatman.plugins.inn.extras.CommandManager;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -14,8 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
-import com.nijikokun.register.payment.Methods;
-import com.nijikokun.register.payment.Method;
 
 public class InnCmd implements CommandExecutor {
 	private final Inn plugin;

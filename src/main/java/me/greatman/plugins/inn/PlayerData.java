@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
-
-import org.bukkit.entity.Player;
 
 public class PlayerData {
     // Objects
-    private Inn plugin = null;
 
     // Attributes
     public List<UUID> shopList = Collections.synchronizedList(new ArrayList<UUID>());
@@ -21,12 +17,10 @@ public class PlayerData {
     private int xyzB[] = null;
     protected String size = "";
     
-    // Logging
-    private static final Logger log = Logger.getLogger("Minecraft");    
+    // Logging 
 
     // Constructor
     public PlayerData(Inn plugin, String playerName) {
-        this.plugin = plugin;
         this.playerName = playerName;
     }
 
