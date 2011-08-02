@@ -1,14 +1,10 @@
 package me.greatman.plugins.inn;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
@@ -19,33 +15,7 @@ public class IPlayerListener extends PlayerListener {
     public IPlayerListener(Inn instance) {
         plugin = instance;
     }
-    public void onBlockBreak(BlockBreakEvent event){
-    	if (event.getBlock().getType() == Material.WOODEN_DOOR){
-    		int x,y,z;
-        	Location loc = event.getBlock().getLocation();
-        	x = loc.getBlockX();
-            y = loc.getBlockY();
-            z = loc.getBlockZ();
-        	if (doorAlreadyExists(x,y,z) && getOwner(x,y,z) != event.getPlayer().getName() || IPermissions.permission(event.getPlayer(), "inn.bypass", event.getPlayer().isOp())){
-        		event.getPlayer().sendMessage(ChatColor.RED + "[Inn] You doesn't own this door!");
-        		event.setCancelled(true);
-        	}else{
-        		String query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y + " AND z=" + z +"";
-        		Inn.manageSQLite.deleteQuery(query);
-        		if (doorAlreadyExists(x,y-1,z)){
-        			int y2 = y - 1;
-        			query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y2 + " AND z=" + z +"";
-            		Inn.manageSQLite.deleteQuery(query);
-        		}else if (doorAlreadyExists(x,y+1,z)){
-        			int y2 = y + 1;
-        			query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y2 + " AND z=" + z +"";
-            		Inn.manageSQLite.deleteQuery(query);
-        		}
-        		event.getPlayer().sendMessage(ChatColor.RED + "[Inn] Door unregistered!");
-        	}
-    	}
-    	
-    }
+    
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.isCancelled())
@@ -69,7 +39,7 @@ public class IPlayerListener extends PlayerListener {
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             	
             	
-            	if (doorAlreadyExists(x,y,z)){
+            	if (Inn.doorAlreadyExists(x,y,z)){
             		player.sendMessage(ChatColor.RED + "This door is already registered!");
             		return;
             	}
@@ -94,13 +64,13 @@ public class IPlayerListener extends PlayerListener {
             y = loc.getBlockY();
             z = loc.getBlockZ();
             ILogger.info("Where1 X:" + x + " Y:" + y + " Z:" + z);
-            if (doorAlreadyExists(x,y,z)){
-            	String owner = getOwner(x,y,z);
+            if (Inn.doorAlreadyExists(x,y,z)){
+            	String owner = Inn.getOwner(x,y,z);
             	ILogger.info("Where2" + owner + playerName);
             	if (owner == playerName)
             		return;
             	ILogger.info("Where3");
-            	int price = getDoorPrice(x,y,z);
+            	int price = Inn.getDoorPrice(x,y,z);
             	
             	ILogger.info("Where4");
             	MethodAccount playerAccount = plugin.Method.getAccount(playerName);
@@ -115,56 +85,5 @@ public class IPlayerListener extends PlayerListener {
             		event.setCancelled(true);
             }
         }
-    }
-    public boolean doorAlreadyExists(int x, int y, int z){
-    	String query = "SELECT id FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
-    	ResultSet result = Inn.manageSQLite.sqlQuery(query);
-    	int id = 0;
-    	try {
-			if (result.next()){
-				id = result.getInt("id");
-				if (id != 0)
-					return true;
-				else
-					return false;
-			}else
-				return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-    	return false;
-    }
-    public int getDoorPrice(int x, int y, int z){
-    	if (doorAlreadyExists(x,y,z)){
-    		String query = "SELECT price FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
-    		ResultSet result = Inn.manageSQLite.sqlQuery(query);
-    		try {
-				if (result.next()){
-					return result.getInt("price");
-				}else
-					
-					return -1;
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-    	}else
-    		return -1;
-    return -1;
-    }
-    public String getOwner(int x, int y, int z){
-    	if (doorAlreadyExists(x,y,z)){
-    		String query = "SELECT owner FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
-    		ResultSet result = Inn.manageSQLite.sqlQuery(query);
-    		try {
-				if (result.next()){
-					return result.getString("owner");
-				}else
-					return "";
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-    	}else
-    		return "";
-    return "";
     }
 }

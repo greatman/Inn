@@ -1,6 +1,8 @@
 package me.greatman.plugins.inn;
 
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class Inn extends JavaPlugin {
 	private final CommandManager commandManager = new CommandManager(this);
 	private final IPlayerListener playerListener = new IPlayerListener(this);
 	private final IServerListener serverListener = new IServerListener(this);
+	private final IBlockListener blockListener = new IBlockListener(this);
 	public Method Method;
 	public static double cost;
 	public File pFolder = new File("plugins" + File.separator + "Inn");
@@ -52,7 +55,7 @@ public class Inn extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_MOVE,playerListener,Priority.Monitor,this);
 		pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverListener,Priority.Monitor,this);
 		pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener,Priority.Monitor,this);
-		pm.registerEvent(Event.Type.BLOCK_BREAK, playerListener, Priority.Monitor, this);
+		pm.registerEvent(Event.Type.BLOCK_BREAK, blockListener, Priority.Monitor, this);
 		ILogger.initialize(Logger.getLogger("Minecraft"));
 		IConfig IConfig = new IConfig(this);
 		IConfig.configCheck();
@@ -113,5 +116,56 @@ public class Inn extends JavaPlugin {
     }
     public boolean isPlayer(CommandSender sender) {
         return sender != null && sender instanceof Player;
+    }
+    public static boolean doorAlreadyExists(int x, int y, int z){
+    	String query = "SELECT id FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
+    	ResultSet result = Inn.manageSQLite.sqlQuery(query);
+    	int id = 0;
+    	try {
+			if (result.next()){
+				id = result.getInt("id");
+				if (id != 0)
+					return true;
+				else
+					return false;
+			}else
+				return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return false;
+    }
+    public static int getDoorPrice(int x, int y, int z){
+    	if (doorAlreadyExists(x,y,z)){
+    		String query = "SELECT price FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
+    		ResultSet result = Inn.manageSQLite.sqlQuery(query);
+    		try {
+				if (result.next()){
+					return result.getInt("price");
+				}else
+					
+					return -1;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    	}else
+    		return -1;
+    return -1;
+    }
+    public static String getOwner(int x, int y, int z){
+    	if (doorAlreadyExists(x,y,z)){
+    		String query = "SELECT owner FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
+    		ResultSet result = Inn.manageSQLite.sqlQuery(query);
+    		try {
+				if (result.next()){
+					return result.getString("owner");
+				}else
+					return "";
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+    	}else
+    		return "";
+    return "";
     }
 }
