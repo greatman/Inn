@@ -67,7 +67,7 @@ public class IPlayerListener extends PlayerListener {
             if (Inn.doorAlreadyExists(x,y,z)){
             	String owner = Inn.getOwner(x,y,z);
             	ILogger.info("Where2" + owner + playerName);
-            	if (owner == playerName)
+            	if (owner.equalsIgnoreCase(playerName))
             		return;
             	ILogger.info("Where3");
             	int price = Inn.getDoorPrice(x,y,z);

@@ -20,7 +20,7 @@ public class IBlockListener extends BlockListener{
         	x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-        	if (Inn.doorAlreadyExists(x,y,z) || Inn.doorAlreadyExists(x, y-1, z) || Inn.doorAlreadyExists(x,y+1,z) && Inn.getOwner(x,y,z) != event.getPlayer().getName() || IPermissions.permission(event.getPlayer(), "inn.bypass", event.getPlayer().isOp())){
+        	if (Inn.doorAlreadyExists(x,y,z) || Inn.doorAlreadyExists(x, y-1, z) || Inn.doorAlreadyExists(x,y+1,z) && Inn.getOwner(x,y,z).equalsIgnoreCase(event.getPlayer().getName()) || IPermissions.permission(event.getPlayer(), "inn.bypass", event.getPlayer().isOp())){
         		event.getPlayer().sendMessage(ChatColor.RED + "[Inn] You doesn't own this door!");
         		event.setCancelled(true);
         	}else{
