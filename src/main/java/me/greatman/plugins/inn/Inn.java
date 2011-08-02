@@ -57,7 +57,7 @@ public class Inn extends JavaPlugin {
 		IPermissions.initialize(this);
 		InnCmd InnCmd = new InnCmd(this);
 		addCommand("inn",InnCmd);
-	    ILogger.info("initialized!");
+	    
 	    manageSQLite = new sqlCore(this.log, this.logPrefix, "Inn", pFolder.getPath());
 	    manageSQLite.initialize();
 	    String tableQuery;
@@ -77,6 +77,7 @@ public class Inn extends JavaPlugin {
         	 else
         		 ILogger.warning("Error while creating doors table");
 	    }
+	    ILogger.info("Initialized!");
 	    
     }
     @Override

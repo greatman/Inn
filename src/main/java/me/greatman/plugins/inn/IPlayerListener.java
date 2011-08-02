@@ -59,17 +59,18 @@ public class IPlayerListener extends PlayerListener {
         }
     }
     public boolean doorAlreadyExists(int x, int y, int z){
-    	String query = "SELECT COUNT(*) FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
+    	String query = "SELECT id FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
     	ResultSet result = Inn.manageSQLite.sqlQuery(query);
-    	int count = 0;
+    	int id = 0;
     	try {
 			if (result.next()){
-				count = result.getInt("count");
-				if (count == 1)
+				id = result.getInt("id");
+				if (id != 0)
 					return true;
 				else
 					return false;
-			}
+			}else
+				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
