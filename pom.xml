@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.greatman.plugins.inn</groupId>
     <artifactId>Inn</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <name>Inn</name>
     <repositories>
         <repository>
