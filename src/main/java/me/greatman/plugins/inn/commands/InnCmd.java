@@ -22,7 +22,7 @@ public class InnCmd implements CommandExecutor {
     	boolean handled = false;
     	if (is(label, "inn")) {
     		if (args == null || args.length == 0){
-    			sendMessage(sender,colorizeText("/ticket help for help",ChatColor.YELLOW));
+    			sendMessage(sender,colorizeText("/inn help for help",ChatColor.YELLOW));
     			return true;
     		}
     		if (is(args[0], "help")){
