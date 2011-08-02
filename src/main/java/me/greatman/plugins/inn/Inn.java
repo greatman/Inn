@@ -236,7 +236,7 @@ public class Inn extends JavaPlugin {
     public static boolean addTimeout(int x, int y, int z, String playerName){
     	if (doorAlreadyExists(x,y,z)){
     		int doorid = getDoorID(x,y,z);
-    		String query = "INSERT INTO time(doorid,player,time) VALUES(" + doorid + ",'" + playerName + "',strftime('%s','now')";
+    		String query = "INSERT INTO time(doorid,player,time) VALUES(" + doorid + ",'" + playerName + "',strftime('%s','now'))";
     		Inn.manageSQLite.insertQuery(query);
     		return true;
     	}
