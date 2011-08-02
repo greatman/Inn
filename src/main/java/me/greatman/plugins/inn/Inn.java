@@ -72,7 +72,7 @@ public class Inn extends JavaPlugin {
 						+"price  INTEGER,"
 						+"PRIMARY KEY (id ASC)"
 						+");";
-        	 if(manageSQLite.checkTable(tableQuery))
+        	 if(manageSQLite.createTable(tableQuery))
         		 ILogger.info("Table doors created!");
         	 else
         		 ILogger.warning("Error while creating doors table");
