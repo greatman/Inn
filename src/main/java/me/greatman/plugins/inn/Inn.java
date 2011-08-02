@@ -29,6 +29,7 @@ public class Inn extends JavaPlugin {
 	private final IPlayerListener playerListener = new IPlayerListener(this);
 	private final IServerListener serverListener = new IServerListener(this);
 	public Method Method;
+	public static double cost;
     public void onDisable() {
         // TODO: Place any custom disable code here.
         System.out.println(this + " is now disabled!");

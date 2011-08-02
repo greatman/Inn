@@ -75,9 +75,9 @@ public class InnCmd implements CommandExecutor {
     					}
     					//We check if the player have enough money to create a inn door
     					MethodAccount playerAccount = plugin.Method.getAccount(playerName);
-    					if (playerAccount.hasEnough(IConfig.cost)){
-    						ILogger.info(Double.toString(IConfig.cost));
-    						playerAccount.subtract(IConfig.cost);
+    					if (playerAccount.hasEnough(Inn.cost)){
+    						ILogger.info(Double.toString(Inn.cost));
+    						playerAccount.subtract(Inn.cost);
     						IConfig.write("door." + i + ".active", true);
         					IConfig.write("door." + i + ".x",xyz[0]);
         					IConfig.write("door." + i + ".y",xyz[1]);

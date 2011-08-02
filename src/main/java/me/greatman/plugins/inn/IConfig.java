@@ -10,7 +10,6 @@ import org.bukkit.util.config.Configuration;
  *
  */
 public class IConfig {
-    public double cost;
     public IConfig(Inn instance) {
     }
     public String directory = "plugins" + File.separator + "Inn";
@@ -76,7 +75,6 @@ public class IConfig {
     }
     private void loadkeys(){
         ILogger.info("Loading Config File...");
-        ILogger.info(Double.toString(readDouble("Inn.cost")));
-        cost = readDouble("Inn.cost");
+        Inn.cost = readDouble("Inn.cost");
         }
 }
