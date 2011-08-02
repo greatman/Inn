@@ -65,23 +65,23 @@ public class IPlayerListener extends PlayerListener {
             x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-            ILogger.info("Where");
+            ILogger.info("Where1 X:" + x + " Y:" + y + " Z:" + z);
             if (doorAlreadyExists(x,y,z)){
-            	ILogger.info("Where" + getOwner(x,y,z) + playerName);
-            	if (getOwner(x,y,z) == playerName){
-            		return;
-            	}
-            	ILogger.info("Where");
-            	int price = getDoorPrice(x,y,z);
             	String owner = getOwner(x,y,z);
-            	ILogger.info("Where");
+            	ILogger.info("Where2" + owner + playerName);
+            	if (owner == playerName)
+            		return;
+            	ILogger.info("Where3");
+            	int price = getDoorPrice(x,y,z);
+            	
+            	ILogger.info("Where4");
             	MethodAccount playerAccount = plugin.Method.getAccount(playerName);
             	if (playerAccount.hasEnough(price)){
-            		ILogger.info("Where");
+            		ILogger.info("Where5");
             		playerAccount.subtract(price);
             		MethodAccount playerAccount2 = plugin.Method.getAccount(owner);
             		playerAccount2.add(price);
-            		ILogger.info("Where");
+            		ILogger.info("Where6");
             		player.sendMessage(ChatColor.DARK_AQUA + "You are entering " + owner + " inn room");
             	}else
             		event.setCancelled(true);
