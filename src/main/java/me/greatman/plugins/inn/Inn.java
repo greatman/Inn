@@ -222,7 +222,7 @@ public class Inn extends JavaPlugin {
     		ResultSet result = Inn.manageSQLite.sqlQuery(query);
     		try {
 				if (result.next()){
-					return result.getInt("price");
+					return result.getInt("id");
 				}else
 					
 					return -1;
