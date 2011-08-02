@@ -57,6 +57,8 @@ public class IPlayerListener extends PlayerListener {
             }
         //Are we trying to open a door?
         }else if (event.getClickedBlock().getType() == Material.WOODEN_DOOR){
+        	if (IPermissions.permission(plugin.getPlayer(player), "inn.bypass", plugin.getPlayer(player).isOp()))
+        			return;
         	int x, y, z;
             Location loc = event.getClickedBlock().getLocation();
             x = loc.getBlockX();
