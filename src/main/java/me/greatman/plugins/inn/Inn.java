@@ -38,6 +38,7 @@ public class Inn extends JavaPlugin {
 	public String logPrefix = "[" + Inn.name + " " + Inn.version + "] ";
     public void onDisable() {
         // TODO: Place any custom disable code here.
+    	manageSQLite.close();
         System.out.println(this + " is now disabled!");
     }
 
