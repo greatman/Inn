@@ -71,11 +71,12 @@ public class IConfig {
     private void addDefaults(){
         ILogger.info("Generating Config File...");
         write("Inn.cost", 100.0);
+        write("Inn.timeout", 10);
         loadkeys();
     }
     private void loadkeys(){
         ILogger.info("Loading Config File...");
         Inn.cost = readDouble("Inn.cost");
-        
+        Inn.timeout = readInteger("Inn.timeout", 10);
         }
 }

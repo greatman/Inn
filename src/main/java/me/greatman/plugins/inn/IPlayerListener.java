@@ -1,5 +1,7 @@
 package me.greatman.plugins.inn;
 
+import java.util.Map;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -69,14 +71,19 @@ public class IPlayerListener extends PlayerListener {
             		return;
             	}
             	int price = Inn.getDoorPrice(x,y,z);
-            	MethodAccount playerAccount = plugin.Method.getAccount(playerName);
-            	if (playerAccount.hasEnough(price)){
-            		playerAccount.subtract(price);
-            		MethodAccount playerAccount2 = plugin.Method.getAccount(owner);
-            		playerAccount2.add(price);
-            		player.sendMessage(ChatColor.DARK_AQUA + "You are entering " + owner + " inn room");
+            	if (Inn.isTimeoutExpired(x, y, z, playerName)){
+            		MethodAccount playerAccount = plugin.Method.getAccount(playerName);
+                	if (playerAccount.hasEnough(price)){
+                		playerAccount.subtract(price);
+                		MethodAccount playerAccount2 = plugin.Method.getAccount(owner);
+                		playerAccount2.add(price);
+                		Inn.addTimeout(x, y, z, playerName);
+                		player.sendMessage(ChatColor.DARK_AQUA + "You are entering " + owner + " inn room");
+                	}else
+                		event.setCancelled(true);
             	}else
-            		event.setCancelled(true);
+            		return;
+            	
             }
         }
     }
