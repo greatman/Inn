@@ -1,7 +1,6 @@
 package me.greatman.plugins.inn;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.util.config.Configuration;
@@ -72,23 +71,11 @@ public class IConfig {
     private void addDefaults(){
         ILogger.info("Generating Config File...");
         write("Inn.cost", 100.0);
-     loadkeys();
+        loadkeys();
     }
     private void loadkeys(){
         ILogger.info("Loading Config File...");
         Inn.cost = readDouble("Inn.cost");
-        for(int i=0;i<=200;i++){
-        	if (readBoolean("door." + i + ".active")){
-        		Inn.doorsx[i] = readInteger("door." + i + ".x",0);
-            	Inn.doorsy[i] = readInteger("door." + i + ".y",0);
-            	Inn.doorsz[i] = readInteger("door." + i + ".z",0);
-            	Inn.owner[i] = readString("door." + i + ".owner");
-            	Inn.price[i] = readInteger("door." + i + ".price",0);
-            	ILogger.info(Arrays.toString(Inn.doorsx));
-        	}else
-        		break;
-        	
-        }
         
         }
 }

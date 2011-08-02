@@ -36,6 +36,9 @@ public class ILogger {
     public static void error(String message) {
         log.severe(prefix + message);
     }
+    public static void severe(String message) {
+        log.severe(prefix + message);
+    }
 
     public static void warning(String message) {
         log.warning(prefix + message);

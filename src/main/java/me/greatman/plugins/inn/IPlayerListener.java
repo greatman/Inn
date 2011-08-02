@@ -1,5 +1,8 @@
 package me.greatman.plugins.inn;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,10 +13,8 @@ import org.bukkit.event.player.PlayerListener;
 
 public class IPlayerListener extends PlayerListener {
 	private final Inn plugin;
-	private IConfig IConfig;
     public IPlayerListener(Inn instance) {
         plugin = instance;
-         IConfig = new IConfig(plugin);
     }
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -37,11 +38,10 @@ public class IPlayerListener extends PlayerListener {
             
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             	
-            	for (int i=0;i < 2000;i++){
-            		if (IConfig.readInteger("door."+ i + ".x", 0) == x && IConfig.readInteger("door."+ i + ".y", 0) == y && IConfig.readInteger("door."+ i + ".z", 0) == z){
-            			player.sendMessage(ChatColor.RED + "This door is already registered!");
-            			return;
-            		}
+            	
+            	if (doorAlreadyExists(x,y,z)){
+            		player.sendMessage(ChatColor.RED + "This door is already registered!");
+            		return;
             	}
                 int[] xyz = { x, y, z };
                 pData.setPositionA(xyz);
@@ -53,6 +53,26 @@ public class IPlayerListener extends PlayerListener {
                 
         
             }
+        //Are we trying to open a door?
+        }else{
+        	
         }
+    }
+    public boolean doorAlreadyExists(int x, int y, int z){
+    	String query = "SELECT COUNT(*) FROM doors WHERE x="+ x + " AND y=" + y + " AND z=" + z;
+    	ResultSet result = Inn.manageSQLite.sqlQuery(query);
+    	int count = 0;
+    	try {
+			if (result.next()){
+				count = result.getInt("count");
+				if (count == 1)
+					return true;
+				else
+					return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return false;
     }
 }

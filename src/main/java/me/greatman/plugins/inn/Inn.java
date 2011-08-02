@@ -1,5 +1,6 @@
 package me.greatman.plugins.inn;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.alta189.sqlLibrary.SQLite.sqlCore;
 import com.nijikokun.register.payment.Method;
 
 public class Inn extends JavaPlugin {
@@ -30,9 +32,10 @@ public class Inn extends JavaPlugin {
 	private final IServerListener serverListener = new IServerListener(this);
 	public Method Method;
 	public static double cost;
-	public static int[] doorsx,doorsy,doorsz;
-	public static String[] owner;
-	public static int[] price;
+	public File pFolder = new File("plugins" + File.separator + "Inn");
+	public static sqlCore manageSQLite; // SQLite handler
+	public Logger log = Logger.getLogger("Minecraft");
+	public String logPrefix = "[" + Inn.name + " " + Inn.version + "] ";
     public void onDisable() {
         // TODO: Place any custom disable code here.
         System.out.println(this + " is now disabled!");
@@ -55,6 +58,26 @@ public class Inn extends JavaPlugin {
 		InnCmd InnCmd = new InnCmd(this);
 		addCommand("inn",InnCmd);
 	    ILogger.info("initialized!");
+	    manageSQLite = new sqlCore(this.log, this.logPrefix, "Inn", pFolder.getPath());
+	    manageSQLite.initialize();
+	    String tableQuery;
+	    if (!manageSQLite.checkTable("doors")) {
+	    	ILogger.info("Creating Doors table");
+        	 tableQuery = "CREATE TABLE doors ("
+						+"id  INTEGER,"
+						+"x  INTEGER,"
+						+"y  INTEGER,"
+						+"z  INTEGER,"
+						+"owner  STRING,"
+						+"price  INTEGER,"
+						+"PRIMARY KEY (id ASC)"
+						+");";
+        	 if(manageSQLite.checkTable(tableQuery))
+        		 ILogger.info("Table doors created!");
+        	 else
+        		 ILogger.warning("Error while creating doors table");
+	    }
+	    
     }
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

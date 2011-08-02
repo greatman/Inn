@@ -1,7 +1,5 @@
 package me.greatman.plugins.inn.commands;
 
-import me.greatman.plugins.inn.IConfig;
-import me.greatman.plugins.inn.ILogger;
 import me.greatman.plugins.inn.IPermissions;
 import me.greatman.plugins.inn.ITools;
 import me.greatman.plugins.inn.Inn;
@@ -14,14 +12,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.nijikokun.register.payment.Method.MethodAccount;
-import com.nijikokun.register.payment.Methods;
 
 public class InnCmd implements CommandExecutor {
 	private final Inn plugin;
-	private final IConfig IConfig;
     public InnCmd(Inn instance) {
         plugin = instance;
-        IConfig = new IConfig(plugin);
     }
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     	boolean handled = false;
@@ -67,23 +62,12 @@ public class InnCmd implements CommandExecutor {
     					Player player = (Player) sender;
         				String playerName = player.getName();
     					int[] xyz = plugin.getPlayerData().get(playerName).getPositionA();
-    					int i = 0;
-    					for (i=0;i < 2000;i++){
-    						if (!IConfig.readBoolean("door."+ i + ".active")){
-    							break;
-    						}
-    					}
-    					//We check if the player have enough money to create a inn door
+    					String query = "INSERT INTO doors(x,y,z,owner,price) VALUES("+ xyz[0] +"," + xyz[1] +"," + xyz[2] +",'" + playerName + "'," + args[1] + ")";
+    					Inn.manageSQLite.insertQuery(query);
     					MethodAccount playerAccount = plugin.Method.getAccount(playerName);
-    					if (playerAccount.hasEnough(Inn.cost)){
-    						ILogger.info(Double.toString(Inn.cost));
-    						playerAccount.subtract(Inn.cost);
-    						IConfig.write("door." + i + ".active", true);
-        					IConfig.write("door." + i + ".x",xyz[0]);
-        					IConfig.write("door." + i + ".y",xyz[1]);
-        					IConfig.write("door." + i + ".z",xyz[2]);
-        					IConfig.write("door." + i + ".price",args[1]);
-        					IConfig.write("door." + i + ".owner",playerName);
+    					//We check if the player have enough money to create a inn door
+        				if (playerAccount.hasEnough(Inn.cost)){
+        					playerAccount.subtract(Inn.cost);
         					sendMessage(sender,colorizeText("Inn room created!",ChatColor.GREEN));
     					}else
     						sendMessage(sender,colorizeText("You don't have enough money!",ChatColor.RED));
