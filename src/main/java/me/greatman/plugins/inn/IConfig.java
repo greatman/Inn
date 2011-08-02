@@ -76,6 +76,7 @@ public class IConfig {
     }
     private void loadkeys(){
         ILogger.info("Loading Config File...");
+        ILogger.info(Double.toString(readDouble("Inn.cost")));
         cost = readDouble("Inn.cost");
         }
 }
