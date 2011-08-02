@@ -67,7 +67,7 @@ public class IPlayerListener extends PlayerListener {
             z = loc.getBlockZ();
             ILogger.info("Where");
             if (doorAlreadyExists(x,y,z)){
-            	ILogger.info("Where");
+            	ILogger.info("Where" + getOwner(x,y,z) + playerName);
             	if (getOwner(x,y,z) == playerName){
             		return;
             	}
