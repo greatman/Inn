@@ -68,6 +68,7 @@ public class InnCmd implements CommandExecutor {
     					//We check if the player have enough money to create a inn door
         				if (playerAccount.hasEnough(Inn.cost)){
         					playerAccount.subtract(Inn.cost);
+        					plugin.getPlayerData().get(playerName).setSelecting(!plugin.getPlayerData().get(playerName).isSelecting());
         					sendMessage(sender,colorizeText("Inn room created!",ChatColor.GREEN));
     					}else
     						sendMessage(sender,colorizeText("You don't have enough money!",ChatColor.RED));
