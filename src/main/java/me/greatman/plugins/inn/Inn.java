@@ -30,6 +30,9 @@ public class Inn extends JavaPlugin {
 	private final IServerListener serverListener = new IServerListener(this);
 	public Method Method;
 	public static double cost;
+	public static int[] doorsx,doorsy,doorsz;
+	public static String[] owner;
+	public static int[] price;
     public void onDisable() {
         // TODO: Place any custom disable code here.
         System.out.println(this + " is now disabled!");
