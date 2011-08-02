@@ -22,7 +22,17 @@ public class InnCmd implements CommandExecutor {
     	boolean handled = false;
     	if (is(label, "inn")) {
     		if (args == null || args.length == 0){
-    			handled = true;
+    			sendMessage(sender,colorizeText("/ticket help for help",ChatColor.YELLOW));
+    			return true;
+    		}
+    		if (is(args[0], "help")){
+    			sendMessage(sender, "You are using " + colorizeText(Inn.name, ChatColor.GREEN)
+                        + " version " + colorizeText(Inn.version, ChatColor.GREEN) + ".");
+        		sendMessage(sender, "Commands:");
+        		if (isPlayer(sender) && IPermissions.permission(plugin.getPlayer(sender), "inn create", plugin.getPlayer(sender).isOp())){
+        			sendMessage(sender,colorizeText("/inn select",ChatColor.YELLOW) +" - Select a door for Inn usage");
+        			sendMessage(sender,colorizeText("/inn create <Price>",ChatColor.YELLOW) + "- Create a inn door");
+        		}
     		}
     		if (is(args[0], "select")){
     			handled = true;
