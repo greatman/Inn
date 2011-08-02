@@ -62,7 +62,9 @@ public class InnCmd implements CommandExecutor {
     					Player player = (Player) sender;
         				String playerName = player.getName();
     					int[] xyz = plugin.getPlayerData().get(playerName).getPositionA();
+    					int y2 = xyz[1] + 1;
     					String query = "INSERT INTO doors(x,y,z,owner,price) VALUES("+ xyz[0] +"," + xyz[1] +"," + xyz[2] +",'" + playerName + "'," + args[1] + ")";
+    					String query2 = "INSERT INTO doors(x,y,z,owner,price) VALUES("+ xyz[0] +"," + y2 +"," + xyz[2] +",'" + playerName + "'," + args[1] + ")";
     					Inn.manageSQLite.insertQuery(query);
     					MethodAccount playerAccount = plugin.Method.getAccount(playerName);
     					//We check if the player have enough money to create a inn door

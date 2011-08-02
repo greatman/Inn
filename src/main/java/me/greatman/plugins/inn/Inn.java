@@ -52,6 +52,7 @@ public class Inn extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_MOVE,playerListener,Priority.Monitor,this);
 		pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverListener,Priority.Monitor,this);
 		pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverListener,Priority.Monitor,this);
+		pm.registerEvent(Event.Type.BLOCK_BREAK, playerListener, Priority.Monitor, this);
 		ILogger.initialize(Logger.getLogger("Minecraft"));
 		IConfig IConfig = new IConfig(this);
 		IConfig.configCheck();

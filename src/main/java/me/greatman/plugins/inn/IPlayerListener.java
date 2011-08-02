@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
@@ -17,6 +18,33 @@ public class IPlayerListener extends PlayerListener {
 	private final Inn plugin;
     public IPlayerListener(Inn instance) {
         plugin = instance;
+    }
+    public void onBlockBreak(BlockBreakEvent event){
+    	if (event.getBlock().getType() == Material.WOODEN_DOOR){
+    		int x,y,z;
+        	Location loc = event.getBlock().getLocation();
+        	x = loc.getBlockX();
+            y = loc.getBlockY();
+            z = loc.getBlockZ();
+        	if (doorAlreadyExists(x,y,z) && getOwner(x,y,z) != event.getPlayer().getName() || IPermissions.permission(event.getPlayer(), "inn.bypass", event.getPlayer().isOp())){
+        		event.getPlayer().sendMessage(ChatColor.RED + "[Inn] You doesn't own this door!");
+        		event.setCancelled(true);
+        	}else{
+        		String query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y + " AND z=" + z +"";
+        		Inn.manageSQLite.deleteQuery(query);
+        		if (doorAlreadyExists(x,y-1,z)){
+        			int y2 = y - 1;
+        			query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y2 + " AND z=" + z +"";
+            		Inn.manageSQLite.deleteQuery(query);
+        		}else if (doorAlreadyExists(x,y+1,z)){
+        			int y2 = y + 1;
+        			query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y2 + " AND z=" + z +"";
+            		Inn.manageSQLite.deleteQuery(query);
+        		}
+        		event.getPlayer().sendMessage(ChatColor.RED + "[Inn] Door unregistered!");
+        	}
+    	}
+    	
     }
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -57,7 +85,7 @@ public class IPlayerListener extends PlayerListener {
             }
         //Are we trying to open a door?
         }else if (event.getClickedBlock().getType() == Material.WOODEN_DOOR){
-        	if (IPermissions.permission(plugin.getPlayer(player), "inn.bypass", plugin.getPlayer(player).isOp()))
+        	if (IPermissions.permission(player, "inn.bypass", player.isOp()))
         			return;
         	int x, y, z;
         	ILogger.info("Where");
@@ -114,6 +142,7 @@ public class IPlayerListener extends PlayerListener {
 				if (result.next()){
 					return result.getInt("price");
 				}else
+					
 					return -1;
 			} catch (SQLException e) {
 				e.printStackTrace();
