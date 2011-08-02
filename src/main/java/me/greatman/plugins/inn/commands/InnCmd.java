@@ -26,6 +26,7 @@ public class InnCmd implements CommandExecutor {
     			return true;
     		}
     		if (is(args[0], "help")){
+    			handled = true;
     			sendMessage(sender, "You are using " + colorizeText(Inn.name, ChatColor.GREEN)
                         + " version " + colorizeText(Inn.version, ChatColor.GREEN) + ".");
         		sendMessage(sender, "Commands:");
