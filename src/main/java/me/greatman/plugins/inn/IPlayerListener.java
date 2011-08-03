@@ -1,7 +1,5 @@
 package me.greatman.plugins.inn;
 
-import java.util.Map;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
