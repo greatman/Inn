@@ -48,7 +48,7 @@ public class IPlayerListener extends PlayerListener {
                 int[] xyz = { x, y, z };
                 pData.setPositionA(xyz);
                 player.sendMessage(ChatColor.DARK_AQUA + "Door selected");
-                
+                event.setCancelled(true);
 	            if(pData.getPositionA() != null) {
 	                   player.sendMessage(ChatColor.DARK_AQUA + "Type " + ChatColor.WHITE + "/inn create [Price]" + ChatColor.DARK_AQUA + ", if you're happy with your selection, otherwise keep selecting!");
 	            }
