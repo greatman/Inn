@@ -9,3 +9,15 @@ commands:
     inn:
         description: inn command
         usage: /inn
+permissions:
+    inn.*:
+        description: Gives access to all inn commands
+        children:
+            inn.bypass: true
+            inn.create: true
+    inn.create:
+        description: Allow people to create a Inn door
+        default: true
+    inn.bypass
+        description: Allow people to bypass door payment
+        default: false

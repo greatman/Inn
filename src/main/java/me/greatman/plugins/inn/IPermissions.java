@@ -32,7 +32,7 @@ public class IPermissions {
 
     private enum PermissionHandler {
 
-        PERMISSIONS, GROUP_MANAGER, NONE
+        PERMISSIONS, BUKKIT, NONE
     }
     private static PermissionHandler handler;
     public static Plugin PermissionPlugin;
@@ -63,11 +63,9 @@ public class IPermissions {
                 handler = PermissionHandler.PERMISSIONS;
                 String version = plugin.getDescription().getVersion();
                     ILogger.info("Permissions version " + version + " loaded.");
-            } else if (pluginName.equals("GroupManager")) {
-                PermissionPlugin = plugin;
-                handler = PermissionHandler.GROUP_MANAGER;
-                String version = plugin.getDescription().getVersion();
-                    ILogger.info("GroupManager version " + version + " loaded.");
+            } else{
+            	ILogger.info("Bukkit permission system loaded.");
+            	handler = PermissionHandler.BUKKIT;
             }
         }
     }
@@ -76,6 +74,8 @@ public class IPermissions {
         switch (handler) {
             case PERMISSIONS:
                 return ((Permissions) PermissionPlugin).getHandler().has(player, permission);
+            case BUKKIT:
+            	return player.hasPermission(permission);
             case NONE:
                 return defaultPerm;
             default:

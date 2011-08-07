@@ -112,7 +112,9 @@ public class InnCmd implements CommandExecutor {
     				}else
     					sendMessage(sender,colorizeText("Expected integer. Received string.",ChatColor.RED));
     			}
-    		}	
+    		}else if (is(args[0], "delete")){
+    			handled = true;
+    		}
     	}
     	return handled;
     }
