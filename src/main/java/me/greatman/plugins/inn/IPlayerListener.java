@@ -79,7 +79,30 @@ public class IPlayerListener extends PlayerListener {
                 
         
             }
-        //Are we trying to open a door?
+          //Are we trying to delete a door?
+        }else if (plugin.getPlayerData().get(playerName).isRemoving() && player.getItemInHand().getType() == Material.AIR && event.getClickedBlock().getType() == Material.WOODEN_DOOR){
+        	ILogger.info("Eh");
+        	int x, y, z;
+            Location loc = event.getClickedBlock().getLocation();
+            x = loc.getBlockX();
+            y = loc.getBlockY();
+            z = loc.getBlockZ();
+            Door door = (Door)event.getClickedBlock().getState().getData();
+            if (door.isTopHalf())
+            	y = y - 1;
+            if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            	
+            	event.setCancelled(true);
+            	if (Inn.doorAlreadyExists(x,y,z)){
+            		String query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y + " AND z=" + z;
+            		Inn.manageSQLite.deleteQuery(query);
+            		player.sendMessage(ChatColor.RED + "This Inn door has been deleted!");
+            		return;
+            	}else{
+            		player.sendMessage(ChatColor.RED + "This door is not a Inn door!");
+            	}
+            }
+          //Are we trying to open a door?
         }else if (event.getClickedBlock().getType() == Material.WOODEN_DOOR){
         	if (IPermissions.permission(player, "inn.bypass", player.isOp()))
         			return;
@@ -114,29 +137,7 @@ public class IPlayerListener extends PlayerListener {
             		return;
             	
             }
-        //Are we trying to delete a door?
-        }else if (plugin.getPlayerData().get(playerName).isRemoving() && player.getItemInHand().getType() == Material.AIR && event.getClickedBlock().getType() == Material.WOODEN_DOOR){
-        	ILogger.info("Eh");
-        	int x, y, z;
-            Location loc = event.getClickedBlock().getLocation();
-            x = loc.getBlockX();
-            y = loc.getBlockY();
-            z = loc.getBlockZ();
-            Door door = (Door)event.getClickedBlock().getState().getData();
-            if (door.isTopHalf())
-            	y = y - 1;
-            if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            	
-            	event.setCancelled(true);
-            	if (Inn.doorAlreadyExists(x,y,z)){
-            		String query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y + " AND z=" + z;
-            		Inn.manageSQLite.deleteQuery(query);
-            		player.sendMessage(ChatColor.RED + "This Inn door has been deleted!");
-            		return;
-            	}else{
-            		player.sendMessage(ChatColor.RED + "This door is not a Inn door!");
-            	}
-            }
+        
         }else
         	ILogger.info("WTF");
     }

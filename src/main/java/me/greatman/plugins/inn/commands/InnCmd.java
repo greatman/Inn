@@ -137,7 +137,7 @@ public class InnCmd implements CommandExecutor {
         			}else if (args.length >= 2){
         				String query = "DELETE FROM doors WHERE owner='" + args[1] + "'";
         				Inn.manageSQLite.deleteQuery(query);
-        				sendMessage(sender, colorizeText("All the Inn doors from ",ChatColor.RED) + args[2] + colorizeText(" are deleted!",ChatColor.RED));
+        				sendMessage(sender, colorizeText("All the Inn doors from ",ChatColor.RED) + args[1] + colorizeText(" are deleted!",ChatColor.RED));
         			}
     				
     				
