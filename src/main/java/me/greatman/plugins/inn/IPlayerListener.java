@@ -26,7 +26,6 @@ package me.greatman.plugins.inn;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -117,6 +116,7 @@ public class IPlayerListener extends PlayerListener {
             }
         //Are we trying to delete a door?
         }else if (plugin.getPlayerData().get(playerName).isRemoving() && player.getItemInHand().getType() == Material.AIR && event.getClickedBlock().getType() == Material.WOODEN_DOOR){
+        	ILogger.info("Eh");
         	int x, y, z;
             Location loc = event.getClickedBlock().getLocation();
             x = loc.getBlockX();
@@ -127,7 +127,7 @@ public class IPlayerListener extends PlayerListener {
             	y = y - 1;
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             	
-            	
+            	event.setCancelled(true);
             	if (Inn.doorAlreadyExists(x,y,z)){
             		String query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y + " AND z=" + z;
             		Inn.manageSQLite.deleteQuery(query);
@@ -137,6 +137,7 @@ public class IPlayerListener extends PlayerListener {
             		player.sendMessage(ChatColor.RED + "This door is not a Inn door!");
             	}
             }
-        }
+        }else
+        	ILogger.info("WTF");
     }
 }
