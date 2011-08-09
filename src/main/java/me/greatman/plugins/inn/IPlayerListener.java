@@ -131,7 +131,7 @@ public class IPlayerListener extends PlayerListener {
                 		Inn.addTimeout(x, y, z, playerName);
                 		player.sendMessage(ChatColor.DARK_AQUA + "You are entering " + owner + " inn room");
                 		final Block block2 = event.getClickedBlock( );
-                        plugin.getServer( ).getScheduler( ).scheduleSyncDelayedTask( plugin, new Runnable( )
+                        /*plugin.getServer( ).getScheduler( ).scheduleSyncDelayedTask( plugin, new Runnable( )
                         {
                             public void run( )
                             {
@@ -165,7 +165,7 @@ public class IPlayerListener extends PlayerListener {
                                 
                                  
                             }
-                        }, Inn.autoclose * 20 );
+                        }, Inn.autoclose * 20 );*/
                 		
                 	}else
                 		event.setCancelled(true);
@@ -174,7 +174,6 @@ public class IPlayerListener extends PlayerListener {
             	
             }
         
-        }else
-        	ILogger.info("WTF");
+        }
     }
 }
