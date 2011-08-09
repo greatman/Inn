@@ -54,6 +54,7 @@ public class Inn extends JavaPlugin {
 	public Method Method;
 	public static double cost;
 	public static int timeout;
+	public static int autoclose;
 	public File pFolder = new File("plugins" + File.separator + "Inn");
 	public static sqlCore manageSQLite; // SQLite handler
 	public Logger log = Logger.getLogger("Minecraft");

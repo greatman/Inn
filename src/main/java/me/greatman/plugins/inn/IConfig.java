@@ -92,11 +92,13 @@ public class IConfig {
         ILogger.info("Generating Config File...");
         write("Inn.cost", 100.0);
         write("Inn.timeout", 10);
+        write("Inn.autoclose",10);
         loadkeys();
     }
     private void loadkeys(){
         ILogger.info("Loading Config File...");
         Inn.cost = readDouble("Inn.cost");
+        Inn.autoclose = readInteger("Inn.autoclose",10);
         Inn.timeout = readInteger("Inn.timeout", 10);
         }
 }

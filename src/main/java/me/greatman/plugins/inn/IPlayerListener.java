@@ -26,6 +26,8 @@ package me.greatman.plugins.inn;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -45,7 +47,7 @@ public class IPlayerListener extends PlayerListener {
         if (event.isCancelled())
             return;
 
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
         String playerName = player.getName();
         if (!plugin.getPlayerData().containsKey(playerName)) {
             plugin.getPlayerData().put(playerName, new PlayerData(plugin, playerName));
@@ -81,7 +83,6 @@ public class IPlayerListener extends PlayerListener {
             }
           //Are we trying to delete a door?
         }else if (plugin.getPlayerData().get(playerName).isRemoving() && player.getItemInHand().getType() == Material.AIR && event.getClickedBlock().getType() == Material.WOODEN_DOOR){
-        	ILogger.info("Eh");
         	int x, y, z;
             Location loc = event.getClickedBlock().getLocation();
             x = loc.getBlockX();
@@ -129,7 +130,42 @@ public class IPlayerListener extends PlayerListener {
                 		playerAccount2.add(price);
                 		Inn.addTimeout(x, y, z, playerName);
                 		player.sendMessage(ChatColor.DARK_AQUA + "You are entering " + owner + " inn room");
-                		
+                		final Block block2 = event.getClickedBlock( );
+                        plugin.getServer( ).getScheduler( ).scheduleSyncDelayedTask( plugin, new Runnable( )
+                        {
+                            public void run( )
+                            {
+                                //Make sure it is still a door
+                                if( !block2.getType( ).equals( Material.WOODEN_DOOR ) )
+                                {
+                                    return;
+                                }
+                                Block upperBlock = player.getWorld().getBlockAt(block2.getLocation().getBlockX(),block2.getLocation().getBlockY(),block2.getLocation().getBlockZ());
+                                if (block2.getFace(upperBlock) == BlockFace.UP)
+                                {
+                                	if( block2.getData( ) == 4 )
+                                    {
+                                        block2.setData( ( byte )0 );
+                                    }
+                                    else if( block2.getData( ) == 3 )
+                                    {
+                                        block2.setData( ( byte )7 );
+                                    }
+                                    
+                                    if( upperBlock.getData( ) == 12 )
+                                    {
+                                        upperBlock.setData( ( byte )8 );
+                                    }
+                                    else if ( upperBlock.getData( ) == 11 )
+                                    {
+                                        upperBlock.setData( ( byte )15 );
+                                    }   
+                                }
+                              
+                                
+                                 
+                            }
+                        }, Inn.autoclose * 20 );
                 		
                 	}else
                 		event.setCancelled(true);
