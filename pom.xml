@@ -18,7 +18,7 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<url> http://lebelw.com/repo/</url>
+			<url>http://lebelw.com/repo/</url>
 		</repository>
 	</repositories>
 	<developers>

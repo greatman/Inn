@@ -26,6 +26,7 @@ package me.greatman.plugins.inn;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -59,7 +60,7 @@ public class IPlayerListener extends PlayerListener {
             y = loc.getBlockY();
             z = loc.getBlockZ();
             PlayerData pData = plugin.getPlayerData().get(playerName);
-            Door door = (Door)event.getClickedBlock();
+            Door door = (Door)event.getClickedBlock().getState().getData();
             if (door.isTopHalf())
             	y = y - 1;
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -88,7 +89,7 @@ public class IPlayerListener extends PlayerListener {
             x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-            Door door = (Door)event.getClickedBlock();
+            Door door = (Door)event.getClickedBlock().getState().getData();
             if (door.isTopHalf())
             	y = y - 1;
             if (Inn.doorAlreadyExists(x,y,z)){
@@ -121,7 +122,7 @@ public class IPlayerListener extends PlayerListener {
             x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-            Door door = (Door)event.getClickedBlock();
+            Door door = (Door)event.getClickedBlock().getState().getData();
             if (door.isTopHalf())
             	y = y - 1;
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {

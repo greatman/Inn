@@ -39,7 +39,7 @@ public class IBlockListener extends BlockListener{
         	x = loc.getBlockX();
             y = loc.getBlockY();
             z = loc.getBlockZ();
-            Door door = (Door)event.getBlock();
+            Door door = (Door)event.getBlock().getState().getData();
             if (door.isTopHalf())
             	y = y - 1;
         	if (Inn.doorAlreadyExists(x,y,z) && !Inn.getOwner(x,y,z).equalsIgnoreCase(event.getPlayer().getName()) || IPermissions.permission(event.getPlayer(), "inn.bypass", event.getPlayer().isOp())){
