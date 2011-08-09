@@ -4,7 +4,7 @@ generator: http://dinnerbone.com/minecraft/tools/pluginator/
 main: me.greatman.plugins.inn.Inn
 name: Inn
 startup: postworld
-version: 0.2
+version: 0.3
 commands:
     inn:
         description: inn command

@@ -55,7 +55,6 @@ public class InnCmd implements CommandExecutor {
         		}
         		if (isPlayer(sender) && IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
         			sendMessage(sender,colorizeText("/inn delete (name)",ChatColor.YELLOW) +" - Delete a Inn door (Name optional)");
-        			sendMessage(sender,colorizeText("/inn stopdelete",ChatColor.YELLOW) + "- Desactivate removal mode.");
         		}
     		}
     		if (is(args[0], "select")){
@@ -143,16 +142,6 @@ public class InnCmd implements CommandExecutor {
     				
     			}else
     				sendMessage(sender,colorizeText("Permission denied.",ChatColor.RED));
-    		}else if (is(args[0], "stopdelete")){
-    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
-    				Player player = (Player) sender;
-    				String playerName = player.getName();
-        			plugin.getPlayerData().get(playerName).setRemoving(false);
-        			sendMessage(sender,colorizeText("Inn removal selection disabled.",ChatColor.AQUA));
-    			}else
-    				sendMessage(sender,colorizeText("Permission denied.",ChatColor.RED));
-    			
-    			
     		}
     	}
     	return handled;
