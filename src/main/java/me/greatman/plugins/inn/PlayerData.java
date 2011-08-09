@@ -37,6 +37,7 @@ public class PlayerData {
     private int xyzA[] = null;
     private int xyzB[] = null;
     protected String size = "";
+	private boolean isRemoving = false;
     
     // Logging 
 
@@ -111,7 +112,12 @@ public class PlayerData {
     public void setSelecting(boolean isSelecting) {
         this.isSelecting = isSelecting;
     }
-
+    public void setRemoving(boolean isRemoving) {
+        this.isRemoving  = isRemoving;
+    }
+    public boolean isRemoving() {
+    	return isRemoving;
+    }
     public boolean isSelecting() {
         return isSelecting;
     }

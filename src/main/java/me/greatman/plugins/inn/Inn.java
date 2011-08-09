@@ -50,7 +50,7 @@ public class Inn extends JavaPlugin {
 	private final CommandManager commandManager = new CommandManager(this);
 	private final IPlayerListener playerListener = new IPlayerListener(this);
 	private final IServerListener serverListener = new IServerListener(this);
-	private final IBlockListener blockListener = new IBlockListener(this);
+	private final IBlockListener blockListener = new IBlockListener();
 	public Method Method;
 	public static double cost;
 	public static int timeout;

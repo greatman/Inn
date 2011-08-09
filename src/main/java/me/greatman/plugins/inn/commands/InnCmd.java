@@ -49,9 +49,13 @@ public class InnCmd implements CommandExecutor {
     			sendMessage(sender, "You are using " + colorizeText(Inn.name, ChatColor.GREEN)
                         + " version " + colorizeText(Inn.version, ChatColor.GREEN) + ".");
         		sendMessage(sender, "Commands:");
-        		if (isPlayer(sender) && IPermissions.permission(plugin.getPlayer(sender), "inn create", plugin.getPlayer(sender).isOp())){
+        		if (isPlayer(sender) && IPermissions.permission(plugin.getPlayer(sender), "inn.create", plugin.getPlayer(sender).isOp())){
         			sendMessage(sender,colorizeText("/inn select",ChatColor.YELLOW) +" - Select a door for Inn usage");
         			sendMessage(sender,colorizeText("/inn create <Price>",ChatColor.YELLOW) + "- Create a inn door");
+        		}
+        		if (isPlayer(sender) && IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
+        			sendMessage(sender,colorizeText("/inn delete (name)",ChatColor.YELLOW) +" - Delete a Inn door (Name optional)");
+        			sendMessage(sender,colorizeText("/inn stopdelete",ChatColor.YELLOW) + "- Desactivate removal mode.");
         		}
     		}
     		if (is(args[0], "select")){
@@ -92,14 +96,9 @@ public class InnCmd implements CommandExecutor {
     					Player player = (Player) sender;
         				String playerName = player.getName();
     					int[] xyz = plugin.getPlayerData().get(playerName).getPositionA();
-    					int y2 = xyz[1] + 1;
-    					int y3 = xyz[1] - 1;
+    					
     					String query = "INSERT INTO doors(x,y,z,owner,price) VALUES("+ xyz[0] +"," + xyz[1] +"," + xyz[2] +",'" + playerName + "'," + args[1] + ")";
-    					String query2 = "INSERT INTO doors(x,y,z,owner,price) VALUES("+ xyz[0] +"," + y2 +"," + xyz[2] +",'" + playerName + "'," + args[1] + ")";
-    					String query3 = "INSERT INTO doors(x,y,z,owner,price) VALUES("+ xyz[0] +"," + y3 +"," + xyz[2] +",'" + playerName + "'," + args[1] + ")";
     					Inn.manageSQLite.insertQuery(query);
-    					Inn.manageSQLite.insertQuery(query2);
-    					Inn.manageSQLite.insertQuery(query3);
     					MethodAccount playerAccount = plugin.Method.getAccount(playerName);
     					//We check if the player have enough money to create a inn door
         				if (playerAccount.hasEnough(Inn.cost)){
@@ -114,6 +113,46 @@ public class InnCmd implements CommandExecutor {
     			}
     		}else if (is(args[0], "delete")){
     			handled = true;
+    			if (!(sender instanceof Player)){
+    				sendMessage(sender,colorizeText("Only players can use this command.",ChatColor.RED));
+    				return handled;
+    			}
+    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
+    				Player player = (Player) sender;
+    				String playerName = player.getName();
+    				if (args.length == 1){
+    					if (!plugin.getPlayerData().containsKey(playerName)) {
+        	                plugin.getPlayerData().put(playerName, new PlayerData(plugin, playerName));
+        	            }
+        	            plugin.getPlayerData().get(playerName).setRemoving(!plugin.getPlayerData().get(playerName).isRemoving());
+
+        	            if (plugin.getPlayerData().get(playerName).isRemoving()) {
+        	                sender.sendMessage(ChatColor.WHITE + "Inn removal selection enabled." + ChatColor.DARK_AQUA + " Use " + ChatColor.WHITE + "bare hands " + ChatColor.DARK_AQUA + "to select!");
+        	                sender.sendMessage(ChatColor.DARK_AQUA + "Left click the room door");
+        	            } else {
+        	                sender.sendMessage(ChatColor.DARK_AQUA + "Inn removal selection disabled.");
+        	                plugin.getPlayerData().put(playerName, new PlayerData(plugin, playerName));
+        	            }
+        	            //Do we want to delete all the doors of a player?
+        			}else if (args.length >= 2){
+        				String query = "DELETE FROM doors WHERE owner='" + args[2] + "'";
+        				Inn.manageSQLite.deleteQuery(query);
+        				sendMessage(sender, colorizeText("All the Inn doors from ",ChatColor.RED) + args[2] + colorizeText(" are deleted!",ChatColor.RED));
+        			}
+    				
+    				
+    			}else
+    				sendMessage(sender,colorizeText("Permission denied.",ChatColor.RED));
+    		}else if (is(args[0], "stopdelete")){
+    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
+    				Player player = (Player) sender;
+    				String playerName = player.getName();
+        			plugin.getPlayerData().get(playerName).setRemoving(false);
+        			sendMessage(sender,colorizeText("Inn removal selection disabled.",ChatColor.AQUA));
+    			}else
+    				sendMessage(sender,colorizeText("Permission denied.",ChatColor.RED));
+    			
+    			
     		}
     	}
     	return handled;
