@@ -49,7 +49,9 @@ public class IPermissions {
             String version = PermissionPlugin.getDescription().getVersion();
                 ILogger.info("Permissions version " + version + " loaded.");
         } else{
-        	ILogger.info("No permissions system found!");
+        	ILogger.info("Bukkit permission system loaded.");
+        	handler = PermissionHandler.BUKKIT;
+        	
         }
     }
 
