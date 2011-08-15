@@ -134,9 +134,13 @@ public class InnCmd implements CommandExecutor {
         	            }
         	            //Do we want to delete all the doors of a player?
         			}else if (args.length >= 2){
-        				String query = "DELETE FROM doors WHERE owner='" + args[1] + "'";
-        				Inn.manageSQLite.deleteQuery(query);
-        				sendMessage(sender, colorizeText("All the Inn doors from ",ChatColor.RED) + args[1] + colorizeText(" are deleted!",ChatColor.RED));
+        				if (IPermissions.permission(plugin.getPlayer(sender), "inn.admin.delete", plugin.getPlayer(sender).isOp())){
+        					String query = "DELETE FROM doors WHERE owner='" + args[1] + "'";
+            				Inn.manageSQLite.deleteQuery(query);
+            				sendMessage(sender, colorizeText("All the Inn doors from ",ChatColor.RED) + args[1] + colorizeText(" are deleted!",ChatColor.RED));
+        				}else
+        					sendMessage(sender,colorizeText("You can't remove semeone else door!",ChatColor.RED));
+        				
         			}
     				
     			}else if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
