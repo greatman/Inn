@@ -26,8 +26,6 @@ package me.greatman.plugins.inn;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -92,9 +90,14 @@ public class IPlayerListener extends PlayerListener {
             if (door.isTopHalf())
             	y = y - 1;
             if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            	
             	event.setCancelled(true);
             	if (Inn.doorAlreadyExists(x,y,z)){
+            		if (!IPermissions.permission(player, "inn.admin.delete", player.isOp())){
+            			if (!Inn.getOwner(x, y, z).equalsIgnoreCase(playerName)){
+            				player.sendMessage(ChatColor.RED + "You do not own this door!");
+            				return;
+            			}
+            		}
             		String query = "DELETE FROM doors WHERE x=" + x + " AND y=" + y + " AND z=" + z;
             		Inn.manageSQLite.deleteQuery(query);
             		player.sendMessage(ChatColor.RED + "This Inn door has been deleted!");
@@ -130,42 +133,6 @@ public class IPlayerListener extends PlayerListener {
                 		playerAccount2.add(price);
                 		Inn.addTimeout(x, y, z, playerName);
                 		player.sendMessage(ChatColor.DARK_AQUA + "You are entering " + owner + " inn room");
-                		final Block block2 = event.getClickedBlock( );
-                        /*plugin.getServer( ).getScheduler( ).scheduleSyncDelayedTask( plugin, new Runnable( )
-                        {
-                            public void run( )
-                            {
-                                //Make sure it is still a door
-                                if( !block2.getType( ).equals( Material.WOODEN_DOOR ) )
-                                {
-                                    return;
-                                }
-                                Block upperBlock = player.getWorld().getBlockAt(block2.getLocation().getBlockX(),block2.getLocation().getBlockY(),block2.getLocation().getBlockZ());
-                                if (block2.getFace(upperBlock) == BlockFace.UP)
-                                {
-                                	if( block2.getData( ) == 4 )
-                                    {
-                                        block2.setData( ( byte )0 );
-                                    }
-                                    else if( block2.getData( ) == 3 )
-                                    {
-                                        block2.setData( ( byte )7 );
-                                    }
-                                    
-                                    if( upperBlock.getData( ) == 12 )
-                                    {
-                                        upperBlock.setData( ( byte )8 );
-                                    }
-                                    else if ( upperBlock.getData( ) == 11 )
-                                    {
-                                        upperBlock.setData( ( byte )15 );
-                                    }   
-                                }
-                              
-                                
-                                 
-                            }
-                        }, Inn.autoclose * 20 );*/
                 		
                 	}else
                 		event.setCancelled(true);

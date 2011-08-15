@@ -116,7 +116,7 @@ public class InnCmd implements CommandExecutor {
     				sendMessage(sender,colorizeText("Only players can use this command.",ChatColor.RED));
     				return handled;
     			}
-    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
+    			if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp()) || IPermissions.permission(plugin.getPlayer(sender), "inn.admin.delete", plugin.getPlayer(sender).isOp())){
     				Player player = (Player) sender;
     				String playerName = player.getName();
     				if (args.length == 1){
@@ -139,6 +139,7 @@ public class InnCmd implements CommandExecutor {
         				sendMessage(sender, colorizeText("All the Inn doors from ",ChatColor.RED) + args[1] + colorizeText(" are deleted!",ChatColor.RED));
         			}
     				
+    			}else if (IPermissions.permission(plugin.getPlayer(sender), "inn.delete", plugin.getPlayer(sender).isOp())){
     				
     			}else
     				sendMessage(sender,colorizeText("Permission denied.",ChatColor.RED));
