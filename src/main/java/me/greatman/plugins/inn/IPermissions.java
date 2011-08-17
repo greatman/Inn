@@ -73,8 +73,6 @@ public class IPermissions {
     }
 
     public static boolean permission(Player player, String permission, boolean defaultPerm) {
-    	if (defaultPerm)
-    		return true;
         switch (handler) {
             case PERMISSIONS:
                 return ((Permissions) PermissionPlugin).getHandler().has(player, permission);
